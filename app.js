@@ -60,6 +60,7 @@
   }
 
   function errorMessage(status, data) {
+    if (status === 403) return 'Your account can’t make changes. Adding, editing and deleting need an Admin account.';
     if (status === 429) return 'Too many requests. The API allows 5 every 10 seconds, so give it a moment and try again.';
     if (data && typeof data === 'object') {
       if (data.message) return data.message;
