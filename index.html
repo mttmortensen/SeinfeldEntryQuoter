@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F3E9D2">
+  <title>Quote Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="checker" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="top">
+      <h1 class="brand">Quote Book</h1>
+      <span class="now">Now watching</span>
+    </header>
+
+    <!-- Sign in (the API requires a JWT) -->
+    <section id="signin" class="card signin" aria-labelledby="signin-title" hidden>
+      <h2 id="signin-title" class="section-label">Sign in to the Seinfeld API</h2>
+      <form id="signin-form" novalidate>
+        <label class="field-label" for="username">Username</label>
+        <input id="username" class="text-input" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+        <label class="field-label" for="password">Password</label>
+        <input id="password" class="text-input" name="password" type="password" autocomplete="current-password" required>
+        <p id="signin-error" class="error" role="alert"></p>
+        <button type="submit" id="signin-btn" class="add-btn">Sign in</button>
+      </form>
+    </section>
+
+    <main id="app" hidden>
+      <!-- Season / episode -->
+      <section class="card ep-card" aria-label="Episode">
+        <div class="steppers">
+          <div class="stepper" role="group" aria-labelledby="season-label">
+            <label id="season-label" class="step-label" for="season">Season</label>
+            <div class="step-row">
+              <button type="button" class="step-btn" data-field="season" data-dir="-1" aria-label="Previous season">&minus;</button>
+              <input id="season" class="step-num" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="1">
+              <button type="button" class="step-btn" data-field="season" data-dir="1" aria-label="Next season">+</button>
+            </div>
+          </div>
+          <div class="stepper" role="group" aria-labelledby="episode-label">
+            <label id="episode-label" class="step-label" for="episode">Episode</label>
+            <div class="step-row">
+              <button type="button" class="step-btn" data-field="episode" data-dir="-1" aria-label="Previous episode">&minus;</button>
+              <input id="episode" class="step-num" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="1">
+              <button type="button" class="step-btn" data-field="episode" data-dir="1" aria-label="Next episode">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ep-title" aria-live="polite">
+          <p id="title-status" class="title-status">Looking up episode…</p>
+          <button type="button" id="title-show" class="title-btn" hidden>
+            <span id="title-text" class="title-text"></span>
+            <span class="title-hint" aria-hidden="true">Edit</span>
+          </button>
+          <div id="title-edit" class="title-edit" hidden>
+            <label id="title-label" for="title-input" class="field-label">New episode — what's it called?</label>
+            <div class="title-row">
+              <input id="title-input" class="title-input" placeholder="Add episode title" autocomplete="off" maxlength="200">
+              <button type="button" id="title-save" class="mini-btn">Save</button>
+              <button type="button" id="title-cancel" class="mini-btn ghost">Cancel</button>
+            </div>
+          </div>
+          <button type="button" id="title-retry" class="mini-btn" hidden>Retry</button>
+          <p id="title-error" class="error" role="alert"></p>
+        </div>
+      </section>
+
+      <!-- Quote entry -->
+      <form id="quote-form" class="entry-form" novalidate>
+        <label for="quote-text" class="section-label">The line</label>
+        <textarea id="quote-text" class="quote-text" rows="3" maxlength="1000" placeholder="These pretzels are making me thirsty!" aria-describedby="enter-hint"></textarea>
+        <p id="enter-hint" class="hint">Enter to save · Shift+Enter for a new line</p>
+
+        <fieldset class="speakers">
+          <legend class="section-label">Who said it</legend>
+          <div class="pill-grid" id="pill-grid">
+            <button type="button" class="pill" data-speaker="Jerry" aria-pressed="false">Jerry</button>
+            <button type="button" class="pill" data-speaker="George" aria-pressed="false">George</button>
+            <button type="button" class="pill" data-speaker="Elaine" aria-pressed="false">Elaine</button>
+            <button type="button" class="pill" data-speaker="Kramer" aria-pressed="false">Kramer</button>
+            <button type="button" class="pill" data-speaker="Newman" aria-pressed="false">Newman</button>
+            <button type="button" class="pill" data-speaker="Frank" aria-pressed="false">Frank</button>
+            <button type="button" class="pill" data-speaker="Puddy" aria-pressed="false">Puddy</button>
+            <button type="button" class="pill" data-speaker="Other" aria-pressed="false">Other</button>
+          </div>
+          <div id="other-wrap" class="other-wrap" hidden>
+            <label for="other-name" class="field-label">Speaker name</label>
+            <input id="other-name" class="text-input" placeholder="e.g. Uncle Leo" maxlength="100" autocomplete="off">
+          </div>
+        </fieldset>
+
+        <p id="form-error" class="error" role="alert"></p>
+        <button type="submit" id="add-btn" class="add-btn">Add quote</button>
+        <p id="form-status" class="status" role="status"></p>
+      </form>
+
+      <!-- Recent -->
+      <section class="recent" aria-labelledby="recent-title">
+        <h2 id="recent-title" class="section-label">Just added</h2>
+        <p id="recent-empty" class="muted">Nothing yet. Yada yada yada.</p>
+        <ol id="recent-list" class="recent-list"></ol>
+      </section>
+
+      <footer class="foot">
+        <button type="button" id="signout-btn" class="link-btn">Sign out</button>
+      </footer>
+    </main>
+  </div>
+
+  <datalist id="speaker-names">
+    <option value="Jerry"><option value="George"><option value="Elaine"><option value="Kramer">
+    <option value="Newman"><option value="Frank"><option value="Puddy">
+  </datalist>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,431 @@
+/* Quote Book — "diner booth" */
+
+:root {
+  --bg: #F3E9D2;
+  --card: #FFF9EA;
+  --ink: #2A1E16;
+  --muted: #6B4E1F;
+  --red: #B3261E;
+  --mustard: #E0A526;
+
+  --border: 2px solid var(--ink);
+  --radius: 14px;
+  --dotted: 2px dotted var(--ink);
+  --shadow: 4px 4px 0 var(--ink);
+
+  --slab: "Alfa Slab One", Georgia, serif;
+  --sans: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+[hidden] { display: none !important; }
+
+button, input, textarea { font: inherit; color: inherit; }
+
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+
+:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 2px;
+}
+
+/* Checkered strip across the top: 7px squares, two rows */
+.checker {
+  height: 14px;
+  background: repeating-conic-gradient(var(--red) 0 25%, var(--card) 0 50%) 0 0 / 14px 14px;
+  border-bottom: var(--border);
+}
+
+.wrap {
+  max-width: 430px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+}
+
+/* ---------- Header ---------- */
+.top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 4px 0 16px;
+}
+
+.brand {
+  margin: 0;
+  font-family: var(--slab);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: 0.3px;
+}
+
+.now {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- Shared bits ---------- */
+.card {
+  background: var(--card);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+.section-label {
+  display: block;
+  margin: 0 0 8px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.field-label {
+  display: block;
+  margin: 10px 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.text-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  background: var(--card);
+  border: var(--border);
+  border-radius: 10px;
+}
+
+.muted { color: var(--muted); margin: 0; }
+
+.hint {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.error {
+  margin: 10px 0 0;
+  font-weight: 600;
+  color: var(--red);
+}
+.error:empty { display: none; }
+
+.error::before { content: "⚠ "; }
+
+.status {
+  margin: 10px 0 0;
+  min-height: 1.4em;
+  font-weight: 600;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ---------- Season / episode card ---------- */
+.steppers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.step-label {
+  display: block;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.step-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.step-btn {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: var(--bg);
+  border: var(--border);
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+}
+.step-btn:active:not(:disabled) { background: var(--mustard); }
+.step-btn:disabled { opacity: 0.4; }
+
+.step-num {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  font-family: var(--slab);
+  font-size: 32px;
+  line-height: 1;
+  text-align: center;
+}
+.step-num:focus { border-color: var(--ink); background: var(--bg); }
+
+.ep-title {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: var(--dotted);
+}
+
+.title-status {
+  margin: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.title-btn {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+  margin: 0 -8px;
+  width: calc(100% + 16px);
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  text-align: left;
+}
+.title-btn:hover { border-color: var(--ink); }
+
+.title-text {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.title-hint {
+  flex: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: underline dotted;
+}
+
+.title-edit .field-label { margin-top: 0; }
+
+.title-row {
+  display: flex;
+  gap: 6px;
+}
+
+.title-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border: 2px dashed var(--ink);
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.title-input::placeholder { color: var(--muted); font-weight: 500; }
+
+.mini-btn {
+  flex: none;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 12px;
+  background: var(--mustard);
+  border: var(--border);
+  border-radius: 10px;
+  font-weight: 700;
+}
+.mini-btn.ghost { background: transparent; }
+.mini-btn:disabled { opacity: 0.5; }
+
+/* ---------- Entry form ---------- */
+.entry-form { margin-top: 20px; }
+
+.quote-text {
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  padding: 12px 14px;
+  background: var(--card);
+  border: var(--border);
+  border-radius: var(--radius);
+  font-size: 24px;
+  line-height: 1.3;
+  resize: vertical;
+}
+.quote-text::placeholder { color: var(--muted); opacity: 0.6; }
+
+.speakers {
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.pill-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.pill {
+  min-height: 44px;
+  padding: 6px 2px;
+  background: var(--card);
+  border: var(--border);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pill[aria-pressed="true"] {
+  background: var(--mustard);
+  font-weight: 700;
+}
+
+.other-wrap .field-label { margin-top: 10px; }
+
+.add-btn {
+  display: block;
+  width: 100%;
+  min-height: 60px;
+  margin-top: 18px;
+  background: var(--red);
+  color: var(--card);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-family: var(--slab);
+  font-size: 22px;
+  letter-spacing: 0.5px;
+  transition: transform 60ms ease, box-shadow 60ms ease;
+}
+.add-btn:active:not(:disabled) {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--ink);
+}
+.add-btn:disabled {
+  background: #C9B9A0;
+  color: var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.add-btn:focus-visible { outline-offset: 4px; }
+
+/* ---------- Just added ---------- */
+.recent {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: var(--dotted);
+}
+
+.recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.entry {
+  background: var(--card);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+
+.entry-text {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.entry-meta {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.entry-meta .who { font-weight: 700; color: var(--ink); }
+
+.entry-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: var(--dotted);
+}
+
+.entry-actions .mini-btn { flex: 1; }
+.entry-actions .danger { background: transparent; color: var(--red); border-color: var(--red); }
+.entry-actions .danger.confirming { background: var(--red); color: var(--card); border-color: var(--ink); }
+
+.entry-edit textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px 10px;
+  background: var(--bg);
+  border: var(--border);
+  border-radius: 10px;
+  font-size: 17px;
+  resize: vertical;
+}
+.entry-edit .field-label:first-child { margin-top: 0; }
+
+/* ---------- Sign in / footer ---------- */
+.signin .add-btn { margin-top: 16px; }
+
+.foot {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.link-btn {
+  min-height: 44px;
+  padding: 0 12px;
+  background: none;
+  border: 0;
+  color: var(--muted);
+  text-decoration: underline;
+}
