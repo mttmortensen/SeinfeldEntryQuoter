@@ -5,27 +5,24 @@ It talks to [SeinfeldAPI](https://github.com/mttmortensen/SeinfeldAPI) (`/api/qu
 
 ## Run it
 
-**1. One-time API setup** (in `SeinfeldAPI`)
+The page talks to the hosted API (`https://api.mortensens.cc/seinfeld/api`, set in `config.js`).
 
-- Add the unique index on episodes: run `SQL/add_episodes_unique_season_episode.sql` against your database.
-- Create an empty `wwwroot` folder if there isn't one (`dotnet run` in Development crashes without it).
-
-**2. Start the API** (listens on `http://localhost:5270`; CORS for localhost is on in Development)
-
-```bash
-cd ../SeinfeldAPI
-dotnet run --launch-profile http
-```
-
-**3. Serve the frontend** (from this folder)
+**1. Serve the page** (from this folder)
 
 ```bash
 python -m http.server 5500 --bind 127.0.0.1
 ```
 
-**4. Open** <http://localhost:5500> and sign in with your SeinfeldAPI account (`/api/auth/register` if you need one).
+**2. Open** <http://localhost:5500> and sign in. Adding, editing and deleting need an **Admin** account.
 
-The API URL is set in `config.js`.
+### Using a local copy of the API instead
+
+Change `apiBase` in `config.js` to `http://localhost:5270/seinfeld/api`, then from `SeinfeldAPI`
+(create an empty `wwwroot` folder first if there isn't one; `dotnet run` in Development crashes without it):
+
+```bash
+dotnet run --launch-profile http
+```
 
 ## Using it
 
